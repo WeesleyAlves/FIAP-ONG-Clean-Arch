@@ -6,11 +6,11 @@ use \Exception;
 
 final class PacoteRecebidoEntity{
     private ?int $id;
-    private string $data_recebimento;
+    private string $dataRecebimento;
     private string $doador;
 
-    public function __construct(string $data_recebimento, string $doador, ?int $id = null) {
-        if( $data_recebimento == '' ){
+    public function __construct(string $dataRecebimento, string $doador, ?int $id = null) {
+        if( $dataRecebimento == '' ){
             throw new Exception('Data de recebimento inválida');
         }
 
@@ -18,13 +18,13 @@ final class PacoteRecebidoEntity{
             throw new Exception('Doador inválido');
         }
 
-        $this->data_recebimento = $data_recebimento;
+        $this->dataRecebimento = $dataRecebimento;
         $this->doador = $doador;
         $this->id = $id;
     }
 
-    static function create(string $data_recebimento, string $doador, ?int $id = null): PacoteRecebidoEntity{
-        return new PacoteRecebidoEntity($data_recebimento, $doador, $id);
+    static function create(string $dataRecebimento, string $doador, ?int $id = null): PacoteRecebidoEntity{
+        return new PacoteRecebidoEntity($dataRecebimento, $doador, $id);
     }
 
     /**
@@ -36,11 +36,11 @@ final class PacoteRecebidoEntity{
     }
 
     /**
-     * Get the value of data_recebimento
+     * Get the value of dataRecebimento
      */ 
-    public function getData_recebimento(): string
+    public function getDataRecebimento(): string
     {
-        return $this->data_recebimento;
+        return $this->dataRecebimento;
     }
 
     /**
