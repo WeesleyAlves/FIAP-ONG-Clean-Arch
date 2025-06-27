@@ -26,7 +26,7 @@ final class CriarPacoteRecebido{
             throw new Exception("Erro ao criar entidade de Pacote: " . $e->getMessage() );
         }
 
-        $this->pacoteDataSource->savePacoteRecebido($pacoteEntity);
+        $pacoteEntity = $this->pacoteDataSource->savePacoteRecebido($pacoteEntity);
 
         return $pacoteEntity;
     }
