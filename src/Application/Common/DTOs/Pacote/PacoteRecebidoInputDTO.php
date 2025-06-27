@@ -1,0 +1,21 @@
+<?php
+
+namespace Src\Application\Common\DTOs\Pacote;
+
+final class PacoteRecebidoInputDTO{
+    public string $dataRecebimento;
+    public string $doador;
+
+    public function __construct(string $dataRecebimento, string $doador) {
+        if (empty($dataRecebimento)) {
+            throw new \InvalidArgumentException('Data de recebimento não pode ser vazia.');
+        }
+
+        if (empty($doador)) {
+            throw new \InvalidArgumentException('Doador não pode ser vazio.');
+        }
+
+        $this->dataRecebimento = $dataRecebimento;
+        $this->doador = $doador;
+    }
+}
