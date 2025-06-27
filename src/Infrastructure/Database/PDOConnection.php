@@ -18,24 +18,26 @@ final class PDOConnection
 
     public function __construct(){}
 
-    public function createConnection(): PDO
+    public function createConnection(): ?PDO
     {
-        $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['dbname']}";
+        return null;
+        
+        // $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['dbname']}";
+        
+        // try {
+        //     $pdo = new PDO(
+        //         $dsn,
+        //         $this->config['user'],
+        //         $this->config['password'],
+        //         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        //     );
 
-        try {
-            $pdo = new PDO(
-                $dsn,
-                $this->config['user'],
-                $this->config['password'],
-                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-            );
-
-            return $pdo;
+        //     return $pdo;
 
 
-        } catch (PDOException $e) {
+        // } catch (PDOException $e) {
 
-            throw new RangeException("Não foi possível conectar ao banco de dados: " . $e->getMessage() );
-        }
+        //     throw new RangeException("Não foi possível conectar ao banco de dados: " . $e->getMessage() );
+        // }
     }
 }

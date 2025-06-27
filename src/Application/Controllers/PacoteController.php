@@ -9,13 +9,13 @@ use Src\Application\Gateways\PacoteGateway;
 use Src\Core\Pacote\UseCases\CriarPacoteRecebido;
 
 final class PacoteController{
-    private PDO $conn;
+    private ?PDO $conn;
 
-    public function __construct(PDO $conn) {
+    public function __construct(?PDO $conn) {
         $this->conn = $conn;
     }
     
-    public function CriarPacoteRecebido(array $data): PacoteRecebidoOutputDTO{
+    public function criarPacoteRecebido(array $data): PacoteRecebidoOutputDTO{
 
         $pacoteDTO = PacoteRecebidoInputDTO::fromArray($data);
 

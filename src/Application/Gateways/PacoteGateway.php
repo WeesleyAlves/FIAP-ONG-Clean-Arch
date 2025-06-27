@@ -9,9 +9,9 @@ use Src\Core\Pacote\Interfaces\PacoteDataSource;
 
 final class PacoteGateway implements PacoteDataSource
 {
-    private PDO $conn;
+    private ?PDO $conn;
 
-    public function __construct(PDO $conn) {
+    public function __construct(?PDO $conn) {
         $this->conn = $conn;
     }
 
