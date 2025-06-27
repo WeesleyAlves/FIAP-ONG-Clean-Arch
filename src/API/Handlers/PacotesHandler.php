@@ -21,7 +21,15 @@ final class PacotesHandler{
     public function run() {
 
         $this->app->post('/pacotes/criar-novo', function (Request $request, Response $response, $args){
-            $this->pacoteController->criarPacoteRecebido( $request->getParsedBody() );
+            $pacoteCriado = $this->pacoteController->criarPacoteRecebido( $request->getParsedBody() );
+
+            $body = array(
+                "status" => 201,
+                "mensagem" => "Pacote criado com sucesso",
+                "data" => $pacoteCriado,
+            );
+
+            $response->getBody()->write(json_encode($body));
 
             return $response->withStatus(200)
                 ->withHeader('Content-Type', 'application/json');

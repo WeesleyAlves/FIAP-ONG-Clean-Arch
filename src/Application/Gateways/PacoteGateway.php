@@ -20,7 +20,7 @@ final class PacoteGateway implements PacoteDataSource
         // $this->conn->exec("FAZ ALGUMA COISA AI");
 
         //SETA O ID DO NEGOCIO E RETORNA;
-        $pacoteEntity->setId(1);
+        $pacoteEntity->setId(rand(0, 1000));
         return $pacoteEntity;
     }
 }
