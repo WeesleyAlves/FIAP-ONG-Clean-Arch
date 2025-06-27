@@ -18,9 +18,9 @@ final class PacoteRecebidoOutputDTO{
 
     public static function fromEntity( PacoteRecebidoEntity $entity ): PacoteRecebidoOutputDTO{
         return new self(
-            $entity->getId(),
             $entity->getDataRecebimento(),
-            $entity->getDoador()
+            $entity->getDoador(),
+            $entity->getId()
         );
     }
 }
