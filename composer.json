@@ -1,0 +1,17 @@
+{
+    "name": "weeal/ong-clean-arch",
+    "description": "Aplicação para estudo de clean arch proposto como desafio na FIAP - SOAT",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Weeal\\OngCleanArch\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Wesley Alves",
+            "email": "weealves1@gmail.com"
+        }
+    ],
+    "require": {}
+}
