@@ -5,5 +5,5 @@ namespace Src\Core\Pacote\Interfaces;
 use Src\Core\Pacote\Entities\PacoteRecebidoEntity;
 
 interface PacoteDataSource{
-    public function savePacoteRecebido(PacoteRecebidoEntity $pacote): PacoteRecebidoEntity;
+    public function savePacoteRecebido(PacoteRecebidoEntity $pacoteEntity): PacoteRecebidoEntity;
 }
