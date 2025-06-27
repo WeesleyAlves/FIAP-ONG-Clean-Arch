@@ -23,7 +23,7 @@ final class PacoteRecebidoEntity{
         $this->id = $id;
     }
 
-    static function create(string $dataRecebimento, string $doador, ?int $id = null): PacoteRecebidoEntity{
+    public static function create(string $dataRecebimento, string $doador, ?int $id = null): PacoteRecebidoEntity{
         return new PacoteRecebidoEntity($dataRecebimento, $doador, $id);
     }
 
