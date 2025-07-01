@@ -6,6 +6,7 @@ use PDO;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
+use Src\Application\Common\DTOs\Pacote\PacoteRecebidoDTO;
 use Src\Application\Controllers\PacoteController;
 
 final class PacotesHandler{
@@ -21,7 +22,9 @@ final class PacotesHandler{
     public function run() {
 
         $this->app->post('/pacotes/criar-novo', function (Request $request, Response $response, $args){
-            $pacoteCriado = $this->pacoteController->criarPacoteRecebido( $request->getParsedBody() );
+            $dto = PacoteRecebidoDTO::fromArray( $request->getParsedBody() );
+
+            $pacoteCriado = $this->pacoteController->criarPacoteRecebido( $dto );
 
             $body = array(
                 "status" => 200,

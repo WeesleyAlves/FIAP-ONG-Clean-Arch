@@ -22,13 +22,7 @@ final class PacoteController{
         $this->conn = $conn;
     }
     
-    public function criarPacoteRecebido(array $data): PacoteRecebidoPresenter{
-        if( !isset( $data["produtos"] ) || !is_array($data["produtos"]) || count($data["produtos"]) == 0 ){
-            throw new InvalidArgumentException("É necessário informar o campo 'produtos', e deve conter pelo menos 1 produto.");
-        }
-
-        $pacoteDTO = PacoteRecebidoDTO::fromArray($data);
-
+    public function criarPacoteRecebido(PacoteRecebidoDTO $pacoteDTO): PacoteRecebidoPresenter{
         $pacoteDatasource = new PacoteGateway( $this->conn );
         $produtoDatasource = new ProdutoGateway( $this->conn );
 
@@ -40,8 +34,7 @@ final class PacoteController{
 
         $produtosCriados = array();
 
-
-        foreach ($data["produtos"] as $produto) {
+        foreach ($pacoteDTO->produtos as $produto) {
             $produtoDTO = ProdutoDTO::fromArray($produto);
 
             $produtoEntity = $criarProdutoUseCase->execute($produtoDTO);
