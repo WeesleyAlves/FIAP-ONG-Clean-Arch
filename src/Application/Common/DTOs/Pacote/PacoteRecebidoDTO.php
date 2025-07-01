@@ -4,7 +4,7 @@ namespace Src\Application\Common\DTOs\Pacote;
 
 use InvalidArgumentException;
 
-final class PacoteRecebidoInputDTO{
+final class PacoteRecebidoDTO{
     public string $dataRecebimento;
     public string $doador;
 

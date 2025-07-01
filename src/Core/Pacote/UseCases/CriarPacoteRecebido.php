@@ -4,7 +4,7 @@
 namespace Src\Core\Pacote\UseCases;
 
 use Exception;
-use Src\Application\Common\DTOs\Pacote\PacoteRecebidoInputDTO;
+use Src\Application\Common\DTOs\Pacote\PacoteRecebidoDTO;
 use Src\Core\Pacote\Entities\PacoteRecebidoEntity;
 use Src\Core\Pacote\Interfaces\PacoteDataSource;
 
@@ -15,7 +15,7 @@ final class CriarPacoteRecebido{
         $this->pacoteDataSource = $pacoteDataSource;
     }
 
-    public function execute( PacoteRecebidoInputDTO $pacoteRecebidoDto ): PacoteRecebidoEntity{
+    public function execute( PacoteRecebidoDTO $pacoteRecebidoDto ): PacoteRecebidoEntity{
         try {
             $pacoteEntity = PacoteRecebidoEntity::create(
                 $pacoteRecebidoDto->dataRecebimento,

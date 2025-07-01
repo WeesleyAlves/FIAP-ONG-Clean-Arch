@@ -29,7 +29,7 @@ final class PacotesHandler{
                 "data" => $pacoteCriado,
             );
 
-            $response->getBody()->write(json_encode($body));
+            $response->getBody()->write(json_encode($body, JSON_UNESCAPED_SLASHES));
 
             return $response->withStatus(200)
                 ->withHeader('Content-Type', 'application/json');
