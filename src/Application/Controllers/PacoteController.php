@@ -6,10 +6,13 @@ use InvalidArgumentException;
 use PDO;
 use Src\Application\Common\DTOs\Pacote\PacoteRecebidoDTO;
 use Src\Application\Common\DTOs\Pacote\ProdutoPacoteDTO;
+use Src\Application\Common\DTOs\Produto\ProdutoDTO;
 use Src\Application\Gateways\PacoteGateway;
+use Src\Application\Gateways\ProdutoGateway;
 use Src\Application\Presenters\PacoteRecebidoPresenter;
 use Src\Core\Pacote\UseCases\AdicionarProdutoPacote;
 use Src\Core\Pacote\UseCases\CriarPacoteRecebido;
+use Src\Core\Produto\UseCases\CriarProduto;
 
 final class PacoteController{
     private ?PDO $conn;
@@ -26,18 +29,31 @@ final class PacoteController{
         $pacoteDTO = PacoteRecebidoDTO::fromArray($data);
 
         $pacoteDatasource = new PacoteGateway( $this->conn );
+        $produtoDatasource = new ProdutoGateway( $this->conn );
+
         $criarPacoteUseCase = new CriarPacoteRecebido($pacoteDatasource);
-        $adicionarProdutoUseCase = new AdicionarProdutoPacote($pacoteDatasource);
+        $criarProdutoUseCase = new CriarProduto( $produtoDatasource );
+        $adicionarProdutoPacoteUseCase = new AdicionarProdutoPacote($pacoteDatasource);
 
-        // foreach ($data["produtos"] as $produto) {
-        //     $dto = ProdutoPacoteDTO::fromArray($produto);
-
-        //     $adicionarProdutoUseCase->execute($dto);
-        // }
+        $pacoteEntity = $criarPacoteUseCase->execute( $pacoteDTO );
 
 
-        $result = $criarPacoteUseCase->execute( $pacoteDTO );
+        foreach ($data["produtos"] as $produto) {
+            $produtoDTO = ProdutoDTO::fromArray($produto);
 
-        return PacoteRecebidoPresenter::fromEntity($result);
+            $produtoEntity = $criarProdutoUseCase->execute($produtoDTO);
+
+            $produtoPacoteDTO = new ProdutoPacoteDTO(
+                $pacoteEntity->getId(),
+                $produtoEntity->getId(),
+                $produto["quantidade"]
+            );
+
+            $adicionarProdutoPacoteUseCase->execute( $produtoPacoteDTO );
+        }
+
+
+
+        return PacoteRecebidoPresenter::fromEntity($pacoteEntity);
     }
 }

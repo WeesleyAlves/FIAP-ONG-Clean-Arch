@@ -63,7 +63,7 @@ final class PacoteRecebidoEntity{
         }
 
         if( $this->id !== null ){
-            throw new Exception('Produto já possui um ID.');
+            throw new Exception('Pacote já possui um ID.');
         }
 
         $this->id = $id;
