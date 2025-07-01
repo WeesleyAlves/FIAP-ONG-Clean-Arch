@@ -24,7 +24,7 @@ final class PacotesHandler{
             $pacoteCriado = $this->pacoteController->criarPacoteRecebido( $request->getParsedBody() );
 
             $body = array(
-                "status" => 201,
+                "status" => 200,
                 "mensagem" => "Pacote criado com sucesso",
                 "data" => $pacoteCriado,
             );
