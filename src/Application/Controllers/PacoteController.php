@@ -2,8 +2,6 @@
 
 namespace Src\Application\Controllers;
 
-use InvalidArgumentException;
-use PDO;
 use Src\Application\Common\DTOs\Pacote\PacoteRecebidoDTO;
 use Src\Application\Common\DTOs\Pacote\ProdutoPacoteDTO;
 use Src\Application\Common\DTOs\Produto\ProdutoDTO;
@@ -14,25 +12,29 @@ use Src\Application\Presenters\ProdutoPresenter;
 use Src\Core\Pacote\UseCases\AdicionarProdutoPacote;
 use Src\Core\Pacote\UseCases\CriarPacoteRecebido;
 use Src\Core\Produto\UseCases\CriarProduto;
+use Src\Infrastructure\Interfaces\PacoteDataSource;
+use Src\Infrastructure\Interfaces\ProdutoDatasource;
 
 final class PacoteController{
-    private ?PDO $conn;
+    private PacoteDataSource $pacoteDataSource;
+    private ProdutoDatasource $produtoDatasource;
 
-    public function __construct(?PDO $conn) {
-        $this->conn = $conn;
+    public function __construct(PacoteDataSource $pacoteDataSource, ProdutoDatasource $produtoDatasource) {
+        $this->pacoteDataSource = $pacoteDataSource;
+        $this->produtoDatasource = $produtoDatasource;
     }
     
     public function criarPacoteRecebido(PacoteRecebidoDTO $pacoteDTO): PacoteRecebidoPresenter{
-        $pacoteDatasource = new PacoteGateway( $this->conn );
-        $produtoDatasource = new ProdutoGateway( $this->conn );
+        $pacoteGateway = new PacoteGateway( $this->pacoteDataSource );
+        $produtoGateway = new ProdutoGateway( $this->produtoDatasource );
 
-        $criarPacoteUseCase = new CriarPacoteRecebido($pacoteDatasource);
-        $criarProdutoUseCase = new CriarProduto( $produtoDatasource );
-        $adicionarProdutoPacoteUseCase = new AdicionarProdutoPacote($pacoteDatasource);
+        $criarPacoteUseCase = new CriarPacoteRecebido($pacoteGateway);
+        $criarProdutoUseCase = new CriarProduto( $produtoGateway );
+        $adicionarProdutoPacoteUseCase = new AdicionarProdutoPacote($pacoteGateway);
 
         $pacoteEntity = $criarPacoteUseCase->execute( $pacoteDTO );
 
-        $produtosCriados = array();
+        $produtosCriados = [];
 
         foreach ($pacoteDTO->produtos as $produto) {
             $produtoDTO = ProdutoDTO::fromArray($produto);

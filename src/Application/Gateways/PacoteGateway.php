@@ -2,34 +2,49 @@
 
 namespace Src\Application\Gateways;
 
-use PDO;
+use Src\Application\Common\DTOs\Pacote\SavePacoteRecebidoDTO;
+use Src\Application\Common\DTOs\Pacote\SaveProdutoPacoteDTO;
 use Src\Core\Pacote\Entities\PacoteProdutoEntity;
 use Src\Core\Pacote\Entities\PacoteRecebidoEntity;
-use Src\Core\Pacote\Interfaces\PacoteDataSource;
+use Src\Infrastructure\Interfaces\PacoteDataSource;
 
 
-final class PacoteGateway implements PacoteDataSource
-{
-    private ?PDO $conn;
 
-    public function __construct(?PDO $conn) {
-        $this->conn = $conn;
+final class PacoteGateway{
+    private PacoteDataSource $dataSource;
+
+    public function __construct(PacoteDataSource $dataSource) {
+        $this->dataSource = $dataSource;
     }
 
     public function savePacoteRecebido(PacoteRecebidoEntity $pacoteEntity): PacoteRecebidoEntity{
-        // TODA A LOGICA DE INSERÇÃO
-        // $this->conn->exec("FAZ ALGUMA COISA AI");
+        $criacaoDTO = new SavePacoteRecebidoDTO(
+            $pacoteEntity->getDataRecebimento(),
+            $pacoteEntity->getDoador(),
+        );
 
-        //SETA O ID DO NEGOCIO E RETORNA;
-        $pacoteEntity->setId(rand(0, 1000));
-        return $pacoteEntity;
+        $resultadoDTO = $this->dataSource->savePacoteRecebido( $criacaoDTO );
+
+        return PacoteRecebidoEntity::create(
+            $resultadoDTO->dataRecebimento,
+            $resultadoDTO->doador,
+            $resultadoDTO->id
+        );
     }
 
     public function saveProdutoPacote(PacoteProdutoEntity $pacoteProdutoEntity): PacoteProdutoEntity{
-        // TODA A LOGICA DE INSERÇÃO
-        // $this->conn->exec("FAZ ALGUMA COISA AI");
+        $criacaoDTO = new SaveProdutoPacoteDTO(
+            $pacoteProdutoEntity->getIdPacote(),
+            $pacoteProdutoEntity->getIdProduto(),
+            $pacoteProdutoEntity->getQuantidadeRecebida(),
+        );
 
-        //SETA O ID DO NEGOCIO E RETORNA;
-        return $pacoteProdutoEntity;
+        $resultadoDTO = $this->dataSource->saveProdutoPacote($criacaoDTO );
+
+        return PacoteProdutoEntity::create(
+            $resultadoDTO->idPacote,
+            $resultadoDTO->idProduto,
+            $resultadoDTO->quantidadeRecebida
+        );
     }
 }

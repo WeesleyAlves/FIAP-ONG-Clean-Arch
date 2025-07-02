@@ -2,24 +2,30 @@
 
 namespace Src\Application\Gateways;
 
-use PDO;
+use Src\Application\Common\DTOs\Produto\SaveProdutoDTO;
 use Src\Core\Produto\Entities\ProdutoEntity;
-use Src\Core\Produto\Interfaces\ProdutoDatasource;
+use Src\Infrastructure\Interfaces\ProdutoDatasource;
 
-final class ProdutoGateway implements ProdutoDatasource{
-    private ?PDO $conn;
 
-    public function __construct(?PDO $conn) {
-        $this->conn = $conn;
+final class ProdutoGateway{
+    private ProdutoDatasource $dataSource;
+
+    public function __construct(ProdutoDatasource $dataSource) {
+        $this->dataSource = $dataSource;
     }
+
+
     public function saveProduto( ProdutoEntity $produtoEntity ): ProdutoEntity{
-        // TODA A LOGICA DE INSERÇÃO
-        // $this->conn->exec("FAZ ALGUMA COISA AI");
+        $criacaoDTO = new SaveProdutoDTO(
+            $produtoEntity->getNome(),
+        );
 
-        //SETA O ID DO NEGOCIO E RETORNA;
-        $produtoEntity->setId( rand(0, 1000) );
+        $resultadoDTO = $this->dataSource->saveProduto($criacaoDTO);
 
-        return $produtoEntity;
+        return ProdutoEntity::create(
+            $resultadoDTO->nome,
+            $resultadoDTO->id
+        );
     }
     
 }

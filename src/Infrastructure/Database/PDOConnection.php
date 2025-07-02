@@ -6,8 +6,7 @@ use PDO;
 use PDOException;
 use RangeException;
 
-final class PDOConnection
-{
+final class PDOConnection{
     private array $config = [
         "host" => "",
         "port" => "",
@@ -22,22 +21,22 @@ final class PDOConnection
     {
         return null;
         
-        // $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['dbname']}";
+        $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['dbname']}";
         
-        // try {
-        //     $pdo = new PDO(
-        //         $dsn,
-        //         $this->config['user'],
-        //         $this->config['password'],
-        //         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        //     );
+        try {
+            $pdo = new PDO(
+                $dsn,
+                $this->config['user'],
+                $this->config['password'],
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
 
-        //     return $pdo;
+            return $pdo;
 
 
-        // } catch (PDOException $e) {
+        } catch (PDOException $e) {
 
-        //     throw new RangeException("Não foi possível conectar ao banco de dados: " . $e->getMessage() );
-        // }
+            throw new RangeException("Não foi possível conectar ao banco de dados: " . $e->getMessage() );
+        }
     }
 }

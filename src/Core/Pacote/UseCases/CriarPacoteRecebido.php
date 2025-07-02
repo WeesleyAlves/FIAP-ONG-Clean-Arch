@@ -5,14 +5,14 @@ namespace Src\Core\Pacote\UseCases;
 
 use Exception;
 use Src\Application\Common\DTOs\Pacote\PacoteRecebidoDTO;
+use Src\Application\Gateways\PacoteGateway;
 use Src\Core\Pacote\Entities\PacoteRecebidoEntity;
-use Src\Core\Pacote\Interfaces\PacoteDataSource;
 
 final class CriarPacoteRecebido{
-    private PacoteDataSource $pacoteDataSource;
+    private PacoteGateway $pacoteGateway;
 
-    public function __construct(PacoteDataSource $pacoteDataSource) {
-        $this->pacoteDataSource = $pacoteDataSource;
+    public function __construct(PacoteGateway $pacoteGateway) {
+        $this->pacoteGateway = $pacoteGateway;
     }
 
     public function execute( PacoteRecebidoDTO $pacoteRecebidoDto ): PacoteRecebidoEntity{
@@ -26,7 +26,7 @@ final class CriarPacoteRecebido{
             throw new Exception("Erro ao criar entidade de Pacote: " . $e->getMessage() );
         }
 
-        $pacoteEntity = $this->pacoteDataSource->savePacoteRecebido($pacoteEntity);
+        $pacoteEntity = $this->pacoteGateway->savePacoteRecebido($pacoteEntity);
 
         return $pacoteEntity;
     }

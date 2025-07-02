@@ -32,4 +32,28 @@ final class PacoteProdutoEntity{
         return new PacoteProdutoEntity($idPacote, $idProduto, $quantidadeRecebida);
     }
 
+
+    /**
+     * Get the value of idPacote
+     */ 
+    public function getIdPacote()
+    {
+        return $this->idPacote;
+    }
+
+    /**
+     * Get the value of idProduto
+     */ 
+    public function getIdProduto()
+    {
+        return $this->idProduto;
+    }
+
+    /**
+     * Get the value of quantidadeRecebida
+     */ 
+    public function getQuantidadeRecebida()
+    {
+        return $this->quantidadeRecebida;
+    }
 }

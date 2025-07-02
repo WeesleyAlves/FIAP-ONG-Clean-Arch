@@ -40,6 +40,12 @@ final class PacoteRecebidoDTO{
             throw new InvalidArgumentException('Campo "produtos" é obrigatório e deve ser um array.');
         }
 
+        foreach( $data['produtos'] as $produto ) {
+            if( (!isset($produto["quantidade"]) || !isset($produto["nome"]) ) ){
+                throw new InvalidArgumentException('Os produtos devem conter nome e quantidade.');
+            }
+        }
+
         return new self(
             $data['dataRecebimento'],
             $data['doador'],

@@ -4,14 +4,15 @@ namespace  Src\Core\Pacote\UseCases;
 
 use Exception;
 use Src\Application\Common\DTOs\Pacote\ProdutoPacoteDTO;
+use Src\Application\Gateways\PacoteGateway;
 use Src\Core\Pacote\Entities\PacoteProdutoEntity;
 use Src\Core\Pacote\Interfaces\PacoteDataSource;
 
 final class AdicionarProdutoPacote{
-    private PacoteDataSource $pacoteDataSource;
+    private PacoteGateway $pacoteGateway;
     
-    public function __construct(PacoteDataSource $pacoteDataSource) {
-        $this->pacoteDataSource = $pacoteDataSource;
+    public function __construct(PacoteGateway $pacoteGateway) {
+        $this->pacoteGateway = $pacoteGateway;
     }
 
     public function execute( ProdutoPacoteDTO $produtoPacoteDTO ): PacoteProdutoEntity{
@@ -26,7 +27,7 @@ final class AdicionarProdutoPacote{
             throw new Exception("Erro ao criar entidade de ProdutoPacote: " . $e->getMessage() );
         }
 
-        $pacoteProdutoEntity = $this->pacoteDataSource->saveProdutoPacote( $pacoteProdutoEntity );
+        $pacoteProdutoEntity = $this->pacoteGateway->saveProdutoPacote( $pacoteProdutoEntity );
 
         return $pacoteProdutoEntity;
     }

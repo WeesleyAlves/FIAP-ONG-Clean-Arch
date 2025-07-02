@@ -8,6 +8,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Src\Application\Common\DTOs\Pacote\PacoteRecebidoDTO;
 use Src\Application\Controllers\PacoteController;
+use Src\Infrastructure\Database\PacoteRepository;
+use Src\Infrastructure\Database\ProdutoRepository;
 
 final class PacotesHandler{
 
@@ -16,7 +18,14 @@ final class PacotesHandler{
 
     public function __construct(App $app, ?PDO $conn) {
         $this->app = $app;
-        $this->pacoteController = new PacoteController($conn);
+
+        $pacoteDataSource = new PacoteRepository($conn);
+        $produtoDataSource = new ProdutoRepository($conn);
+
+        $this->pacoteController = new PacoteController( 
+            $pacoteDataSource,
+            $produtoDataSource
+        );
     }
 
     public function run() {

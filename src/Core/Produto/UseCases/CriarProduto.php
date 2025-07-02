@@ -4,14 +4,14 @@ namespace Src\Core\Produto\UseCases;
 
 use Exception;
 use Src\Application\Common\DTOs\Produto\ProdutoDTO;
+use Src\Application\Gateways\ProdutoGateway;
 use Src\Core\Produto\Entities\ProdutoEntity;
-use Src\Core\Produto\Interfaces\ProdutoDatasource;
 
 final class CriarProduto{
-    private ProdutoDatasource $produtoDatasource;
+    private ProdutoGateway $produtoGateway;
 
-    public function __construct(ProdutoDatasource $produtoDatasource){
-        $this->produtoDatasource = $produtoDatasource;
+    public function __construct(ProdutoGateway $produtoGateway){
+        $this->produtoGateway = $produtoGateway;
     }
 
     public function execute( ProdutoDTO $produtoDTO ): ProdutoEntity{
@@ -25,6 +25,6 @@ final class CriarProduto{
         }
 
 
-        return $this->produtoDatasource->saveProduto( $produtoEntity );
+        return $this->produtoGateway->saveProduto( $produtoEntity );
     }
 }
