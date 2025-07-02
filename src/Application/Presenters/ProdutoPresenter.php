@@ -20,7 +20,7 @@ final class ProdutoPresenter{
         $this->quantidade = $quantidade;
     }
 
-    public static function fromEntity( ProdutoEntity $entity, ?int $quantidade ): ProdutoPresenter{
+    public static function create( ProdutoEntity $entity, ?int $quantidade ): ProdutoPresenter{
         return new ProdutoPresenter(
             $entity->getNome(),
             $entity->getId(),

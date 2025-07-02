@@ -51,7 +51,7 @@ final class PacoteController{
 
             $adicionarProdutoPacoteUseCase->execute( $produtoPacoteDTO );
 
-            $produtosCriados[] = ProdutoPresenter::fromEntity( $produtoEntity, $quantidade);
+            $produtosCriados[] = ProdutoPresenter::create( $produtoEntity, $quantidade);
         }
 
 
