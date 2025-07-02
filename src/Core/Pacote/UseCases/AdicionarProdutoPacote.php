@@ -6,7 +6,6 @@ use Exception;
 use Src\Application\Common\DTOs\Pacote\ProdutoPacoteDTO;
 use Src\Application\Gateways\PacoteGateway;
 use Src\Core\Pacote\Entities\PacoteProdutoEntity;
-use Src\Core\Pacote\Interfaces\PacoteDataSource;
 
 final class AdicionarProdutoPacote{
     private PacoteGateway $pacoteGateway;
